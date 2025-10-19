@@ -129,6 +129,23 @@ section { scroll-margin-top: calc(var(--header-h) + 16px); }
   line-height: 1.6;
 }
 
+/*Image section*/  
+.img-wrap {
+  max-width: 420px;     /* container width */
+  margin: 1rem auto;    /* center */
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.06);
+}
+.img-wrap img {
+  width: 100%;
+  height: auto;         /* keep aspect ratio */
+  display: block;
+}
+
+
 
 
 /* Video section*/
