@@ -8,11 +8,11 @@
 </head>
 <body>
   <!-- Navigation -->
-  <header class="site-header">
+   <header class="site-header">
     <div class="nav-wrap">
       <h1 class="brand">LOTLOUISCHO STEM CLUB</h1>
 
-      <!-- horizontally scrollable nav -->
+      <!-- Desktop nav -->
       <nav class="main-nav" aria-label="Main">
         <a href="#about">About</a>
         <a href="#videos">Videos</a>
@@ -21,11 +21,23 @@
         <a href="#contact">Contact</a>
       </nav>
 
-      <!-- optional nudge buttons (shown on mobile only) -->
-      <button class="nav-nudge left" aria-label="Scroll left">‹</button>
-      <button class="nav-nudge right" aria-label="Scroll right">›</button>
+      <!-- Mobile hamburger -->
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <!-- simple icon -->
+        <span></span><span></span><span></span>
+      </button>
     </div>
+
+    <!-- Mobile dropdown menu -->
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile">
+      <a href="#about">About</a>
+      <a href="#videos">Videos</a>
+      <a href="#download-sat">Download SAT</a>
+      <a href="#download-psat">Download PSAT</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
+
 
 
 
