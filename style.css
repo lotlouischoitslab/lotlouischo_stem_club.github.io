@@ -344,3 +344,76 @@ footer {
 .btn.outline:hover {
   background: #eef2ff;
 }
+
+
+/* Hide hamburger on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 3px;
+  background: #111;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Show hamburger on mobile only */
+@media (max-width: 720px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .main-nav {
+    display: none; /* hide desktop nav */
+  }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .mobile-menu.open {
+    display: flex;
+  }
+
+  .mobile-menu a {
+    padding: 0.5rem 0;
+    text-decoration: none;
+    color: #111;
+    font-weight: 600;
+  }
+
+  .mobile-menu a:hover {
+    color: #2563eb;
+  }
+}
+
+/* Optional animation for the hamburger turning into an “X” when open */
+.hamburger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.hamburger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
