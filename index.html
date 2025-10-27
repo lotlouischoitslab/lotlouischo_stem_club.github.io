@@ -7,43 +7,61 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Navigation -->
-  <header class="site-header">
-    <div class="nav-wrap">
-      <h1 class="brand">LOTLOUISCHO STEM CLUB</h1>
 
-      <!-- Desktop nav -->
-      <nav class="main-nav" aria-label="Main">
-        <a href="#about">About</a>
-        <a href="#videos">Videos</a>
-        <a href="#download-sat">Downloads</a>  
-        <a href="#resources">Resources</a>
-      </nav>
 
-      <!-- Mobile hamburger -->
-      <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+<header class="site-header">
+  <div class="nav-wrap">
+    <h1 class="brand">LOTLOUISCHO STEM CLUB</h1>
 
-    <!-- Mobile dropdown -->
-    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile">
+    <!-- Desktop nav -->
+    <nav class="main-nav" aria-label="Main">
       <a href="#about">About</a>
       <a href="#videos">Videos</a>
-      <a href="#download-sat">Downloads</a>
+
+      <!-- Tutorials dropdown -->
+      <div class="nav-item dropdown">
+        <button class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Tutorials
+          <svg class="chev" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+        <div class="dropdown-menu" role="menu">
+          <a href="#tutorials-python" role="menuitem">Python Programming</a>
+          <a href="#tutorials-sat" role="menuitem">SAT</a>
+          <a href="#tutorials-psat" role="menuitem">PSAT</a>
+        </div>
+      </div>
+
       <a href="#resources">Resources</a>
     </nav>
-  </header>
 
+    <!-- Mobile hamburger -->
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 
+  <!-- Mobile dropdown menu -->
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile">
+    <a href="#about">About</a>
+    <a href="#videos">Videos</a>
 
+    <!-- Mobile Tutorials with expandable submenu -->
+    <button class="mobile-dd-btn" aria-expanded="false">Tutorials</button>
+    <div class="mobile-submenu">
+      <a href="#tutorials-python">Python Programming</a>
+      <a href="#tutorials-sat">SAT</a>
+      <a href="#tutorials-psat">PSAT</a>
+    </div>
 
-  <!-- Hero Section -->
-  <!-- <section id="hero">
-    <h2>1:1 SAT & PSAT Tutoring That Boosts Scores</h2>
-    <p>Personalized lessons and strategies to maximize your test performance.</p>
-    <a class="button" href="https://calendly.com/your-link" target="_blank">Book a Free Consult</a>
-  </section> -->
+    <a href="#resources">Resources</a>
+  </nav>
+</header>
+
+ 
+ 
+ 
 
   <!-- About Section -->
   <section id="about" class="about">
@@ -103,9 +121,32 @@
   </section>
 
 
-  <!-- ===================== Digital SAT Downloads ===================== -->
-  <section id="download-sat" class="download-section">
-    <h2>Downloads — Digital SAT</h2>
+  <!-- ===================== Tutorials ===================== -->
+     <section id="tutorials-python" class="download-section">
+    <h2>Python Programming Tutorials</h2>
+    <p class="muted">Learn how to code using these basic Python concepts!</p>
+
+    <ul class="download-grid">
+      <li class="download-card">
+        <h3>Introduction to Computer Science using Python</h3> 
+        <div class="actions">
+          <a class="btn" href="https://github.com/lotlouischoitslab/Computational_Transportation_Science/tree/main/00Transportation_Python_Intro" >
+            Download Python Files & Notebooks
+          </a>
+        <a class="btn" href="https://www.youtube.com/watch?v=i0x3sXo0-CQ" target="_blank">
+          Watch Tutorial
+        </a>
+        </div>
+      </li>
+ 
+ 
+    </ul>
+  </section>
+
+
+
+  <section id="tutorials-sat" class="download-section">
+    <h2>Digital SAT Tutorials</h2>
     <p class="muted">All the released Digital SAT practice tests from College Board with comprehensive math walkthroughs.</p>
 
     <ul class="download-grid">
@@ -236,22 +277,13 @@
           </a>
         </div>
       </li>
-
-
-      
-
-  
-      
-
-
-
-      <!-- Add more SAT items as needed -->
+ 
     </ul>
   </section>
 
   <!-- ===================== Digital PSAT Downloads ===================== -->
-  <section id="download-psat" class="download-section">
-    <h2>Downloads — Digital PSAT</h2>
+  <section id="tutorials-psat" class="download-section">
+    <h2>Digital PSAT Tutorials</h2>
     <p class="muted">All the released Digital PSAT practice tests from College Board with comprehensive math walkthroughs.</p>
 
     <ul class="download-grid">
@@ -304,9 +336,7 @@
         </a>
         </div>
       </li>
-
-   
-      <!-- Add more SAT items as needed -->
+ 
     </ul>
   </section>
 
