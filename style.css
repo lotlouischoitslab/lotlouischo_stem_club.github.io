@@ -433,7 +433,7 @@ footer {
 /* ===== Image Carousel ===== */
 .carousel{
   position: relative;
-  max-width: 900px;
+  max-width: 800px;
   margin: 1.25rem auto 0;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
@@ -444,13 +444,12 @@ footer {
 
 .carousel__track{
   display: flex;
-  align-items: stretch;
-  transition: transform .35s ease;
-  will-change: transform;
+  gap: 0;
+  padding: 0;
 }
 
 .carousel__slide{
-  min-width: 100%;
+  flex: 0 0 90%;   /* EXACTLY one panel wide */
   display: grid;
   grid-template-rows: 1fr auto;
   background: #f9fafb;
@@ -458,10 +457,11 @@ footer {
 
 .carousel__slide img{
   width: 100%;
-  height: clamp(220px, 45vw, 480px);
-  object-fit: cover;       /* use 'contain' if you prefer letterboxing */
-  display: block;
+  height: clamp(200px, 45vw, 400px);
+  object-fit: cover;
+  object-position: 40% center;   /* <-- shift to the left side */
 }
+
 
 .carousel__slide figcaption{
   padding: 10px 12px;

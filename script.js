@@ -21,80 +21,107 @@ if (mobileDdBtn && mobileSubmenu) {
 }
 
 
+document.querySelectorAll('[data-carousel]').forEach(makeCarousel);
 
-
-
-// ===== Simple Carousel (arrows, dots, swipe) =====
-function makeCarousel(root){
-  const track = root.querySelector('[data-carousel-track]');
-  const slides = Array.from(track.children);
-  const prevBtn = root.querySelector('[data-carousel-prev]');
-  const nextBtn = root.querySelector('[data-carousel-next]');
+function makeCarousel(root) {
+  const track    = root.querySelector('[data-carousel-track]');
+  const slides   = Array.from(track?.children || []);
+  const prevBtn  = root.querySelector('[data-carousel-prev]');
+  const nextBtn  = root.querySelector('[data-carousel-next]');
   const dotsWrap = root.querySelector('[data-carousel-dots]');
 
+  if (!track || !slides.length || !prevBtn || !nextBtn || !dotsWrap) {
+    console.warn('Carousel: missing element(s).'); return;
+  }
+
   // Build dots
+  dotsWrap.innerHTML = '';
   slides.forEach((_, i) => {
     const b = document.createElement('button');
     b.type = 'button';
     b.setAttribute('role', 'tab');
-    b.setAttribute('aria-label', `Go to slide ${i+1}`);
+    b.setAttribute('aria-label', `Go to slide ${i + 1}`);
     if (i === 0) b.setAttribute('aria-selected', 'true');
     dotsWrap.appendChild(b);
   });
   const dots = Array.from(dotsWrap.children);
 
   let index = 0;
-  let w = root.clientWidth;
 
-  function updateWidth(){ w = root.clientWidth; goTo(index, false); }
-  window.addEventListener('resize', updateWidth);
-
-  function goTo(i, animate = true){
-    index = (i + slides.length) % slides.length;
+  const apply = (animate = true, extraPct = 0) => {
     track.style.transition = animate ? 'transform .35s ease' : 'none';
-    track.style.transform = `translateX(${-index * w}px)`;
-    dots.forEach((d, k) => d.setAttribute('aria-selected', k === index ? 'true' : 'false'));
-  }
+    // base is -index * 100%, plus an optional drag offset in %
+    const basePct = -index * 100 + extraPct;
+    track.style.transform = `translate3d(${basePct}%, 0, 0)`;
+    if (extraPct === 0) {
+      dots.forEach((d, k) => d.setAttribute('aria-selected', k === index ? 'true' : 'false'));
+    }
+  };
 
-  prevBtn.addEventListener('click', () => goTo(index - 1));
-  nextBtn.addEventListener('click', () => goTo(index + 1));
-  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+  const goTo = (i, animate = true) => {
+    index = (i + slides.length) % slides.length;
+    apply(animate, 0);
+  };
 
-  // Keyboard support
+  // Prevent form submit side-effects
+  prevBtn.type = prevBtn.type || 'button';
+  nextBtn.type = nextBtn.type || 'button';
+
+  // Arrow clicks
+  prevBtn.addEventListener('click', (e) => { e.preventDefault(); goTo(index - 1, true); });
+  nextBtn.addEventListener('click', (e) => { e.preventDefault(); goTo(index + 1, true); });
+
+  // Dot clicks
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i, true)));
+
+  // Keyboard
+  if (!root.hasAttribute('tabindex')) root.setAttribute('tabindex', '0');
   root.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') goTo(index - 1);
-    if (e.key === 'ArrowRight') goTo(index + 1);
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(index - 1, true); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(index + 1, true); }
   });
 
-  // Touch swipe
-  let startX = 0, dx = 0, isDown = false, isMoving = false;
+  // Swipe/drag on track only; ignore controls
+  let startX = 0, dx = 0, isDown = false;
+  const isOnControl = (el) =>
+    !!el.closest('[data-carousel-prev], [data-carousel-next], [data-carousel-dots]');
 
-  root.addEventListener('pointerdown', (e) => {
-    isDown = true; isMoving = true; startX = e.clientX; dx = 0;
+  track.addEventListener('pointerdown', (e) => {
+    if (isOnControl(e.target)) return;
+    isDown = true; startX = e.clientX; dx = 0;
     track.style.transition = 'none';
-    root.setPointerCapture(e.pointerId);
+    track.setPointerCapture?.(e.pointerId);
   });
-  root.addEventListener('pointermove', (e) => {
+
+  track.addEventListener('pointermove', (e) => {
     if (!isDown) return;
     dx = e.clientX - startX;
-    track.style.transform = `translateX(${ -index * w + dx }px)`;
+    // convert pixel drag to percent of the carousel viewport width
+    const rootWidth = root.clientWidth || 1;
+    const dragPct = (dx / rootWidth) * 100;
+    apply(false, dragPct);
   });
-  root.addEventListener('pointerup', (e) => {
+
+  const endPointer = (e) => {
     if (!isDown) return;
     isDown = false;
-    // snap threshold: 20% of width
-    const threshold = w * 0.2;
-    if (dx > threshold) goTo(index - 1);
-    else if (dx < -threshold) goTo(index + 1);
-    else goTo(index);
-    isMoving = false;
-    root.releasePointerCapture?.(e.pointerId);
-  });
-  root.addEventListener('pointercancel', () => { if (isMoving) goTo(index); isDown = false; });
+    const rootWidth = root.clientWidth || 1;
+    const dragPct = (dx / rootWidth) * 100;
+    const thresholdPct = 20; // 20% swipe to change slide
+    if (dragPct >  thresholdPct) goTo(index - 1, true);
+    else if (dragPct < -thresholdPct) goTo(index + 1, true);
+    else goTo(index, true);
+    track.releasePointerCapture?.(e.pointerId);
+  };
+  track.addEventListener('pointerup', endPointer);
+  track.addEventListener('pointercancel', endPointer);
 
-  // Init
-  updateWidth();
+  // Init + resize
+  const init = () => apply(false, 0);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+  window.addEventListener('resize', () => requestAnimationFrame(() => apply(false, 0)));
 }
-
-// Initialize all carousels on the page
-document.querySelectorAll('[data-carousel]').forEach(makeCarousel);
