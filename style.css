@@ -429,3 +429,85 @@ footer {
 }
 
 
+
+/* ===== Image Carousel ===== */
+.carousel{
+  position: relative;
+  max-width: 900px;
+  margin: 1.25rem auto 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0,0,0,.06);
+}
+
+.carousel__track{
+  display: flex;
+  align-items: stretch;
+  transition: transform .35s ease;
+  will-change: transform;
+}
+
+.carousel__slide{
+  min-width: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background: #f9fafb;
+}
+
+.carousel__slide img{
+  width: 100%;
+  height: clamp(220px, 45vw, 480px);
+  object-fit: cover;       /* use 'contain' if you prefer letterboxing */
+  display: block;
+}
+
+.carousel__slide figcaption{
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: #374151;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* arrows */
+.carousel__arrow{
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border: 1px solid #e5e7eb; border-radius: 50%;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(6px);
+  display: grid; place-items: center;
+  font-size: 18px; line-height: 1;
+  color: #111827;
+  cursor: pointer; z-index: 2;
+  transition: transform .1s ease, box-shadow .2s ease, background .2s ease;
+}
+.carousel__arrow:hover{ box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.carousel__arrow:active{ transform: translateY(-50%) scale(.96); }
+.carousel__arrow.prev{ left: 10px; }
+.carousel__arrow.next{ right: 10px; }
+
+/* dots */
+.carousel__dots{
+  position: absolute;
+  left: 0; right: 0; bottom: 10px;
+  display: flex; gap: 8px; justify-content: center; align-items: center;
+}
+.carousel__dots button{
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(0,0,0,.28); border: none; cursor: pointer;
+}
+.carousel__dots button[aria-selected="true"]{ background: #2563eb; }
+
+/* keyboard focus */
+.carousel__arrow:focus-visible,
+.carousel__dots button:focus-visible{
+  outline: 2px solid #2563eb; outline-offset: 2px;
+}
+
+/* small screens */
+@media (max-width: 480px){
+  .carousel__arrow{ width: 38px; height: 38px; }
+}

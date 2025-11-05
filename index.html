@@ -27,6 +27,7 @@
           </svg>
         </button>
         <div class="dropdown-menu" role="menu">
+          <a href="#tutorials-math" role="menuitem">Mathematics</a>
           <a href="#tutorials-cs" role="menuitem">Computer Science</a>
           <a href="#tutorials-sat" role="menuitem">SAT</a>
           <a href="#tutorials-psat" role="menuitem">PSAT</a>
@@ -50,6 +51,7 @@
     <!-- Mobile Tutorials with expandable submenu -->
     <button class="mobile-dd-btn" aria-expanded="false">Tutorials</button>
     <div class="mobile-submenu">
+      <a href="#tutorials-math">Mathematics</a>
       <a href="#tutorials-cs">Computer Science</a>
       <a href="#tutorials-sat">SAT</a>
       <a href="#tutorials-psat">PSAT</a>
@@ -121,7 +123,46 @@
 
 
   <!-- ===================== Tutorials ===================== -->
-     <section id="tutorials-cs" class="download-section">
+  <section id="tutorials-math" class="download-section">
+    <h2>Mathematics Tutorials</h2>
+    <p class="muted">For middle and high school students, please refer to the flowchart to follow the appropriate math courses.
+       Learn important math concepts for school!</p>
+    
+      <!-- Carousel -->
+      <div class="carousel" data-carousel id="math-carousel">
+        <button class="carousel__arrow prev" aria-label="Previous image" data-carousel-prev>❮</button>
+
+        <div class="carousel__track" data-carousel-track>
+          <!-- Replace src paths with your real images -->
+          <figure class="carousel__slide">
+            <img src="images/math_flow1.png" alt="Algebra concept example" loading="lazy">
+            <figcaption>Algebra • Linear equations</figcaption>
+          </figure>
+          <figure class="carousel__slide">
+            <img src="images/math_flow2.png" alt="Geometry concept example" loading="lazy">
+            <figcaption>Geometry • Triangles & angles</figcaption>
+          </figure>
+          <figure class="carousel__slide">
+            <img src="images/math_flow3.png" alt="Functions and graphs" loading="lazy">
+            <figcaption>Functions • Graph features</figcaption>
+          </figure>
+          <figure class="carousel__slide">
+            <img src="images/math_flow4.png" alt="Statistics and data" loading="lazy">
+            <figcaption>Statistics • Mean & median</figcaption>
+          </figure>
+        </div>
+
+        <button class="carousel__arrow next" aria-label="Next image" data-carousel-next>❯</button>
+
+        <div class="carousel__dots" aria-label="Slide dots" role="tablist" data-carousel-dots></div>
+      </div>
+
+
+ 
+  </section>
+
+
+  <section id="tutorials-cs" class="download-section">
     <h2>Computer Science Tutorials</h2>
     <p class="muted">Learn how to code using these basic Python concepts!</p>
 
