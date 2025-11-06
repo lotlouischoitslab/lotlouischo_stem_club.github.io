@@ -430,7 +430,10 @@ footer {
 
 
 
-/* ===== Image Carousel ===== */
+/* ===== Image Carousel (final) ===== */
+.carousel,
+.carousel * { box-sizing: border-box; }
+
 .carousel{
   position: relative;
   max-width: 800px;
@@ -442,27 +445,38 @@ footer {
   box-shadow: 0 10px 24px rgba(0,0,0,.06);
 }
 
+/* Track: no spacing */
 .carousel__track{
   display: flex;
   gap: 0;
   padding: 0;
+  will-change: transform;
+  /* JS controls transition; leaving it off here avoids conflicts */
 }
 
+/* Slides: EXACTLY one viewport wide, no margins */
+.carousel__slide,
+.carousel figure{           /* <figure> has default margins; kill them */
+  margin: 0 !important;
+  padding: 0 !important;
+}
 .carousel__slide{
-  flex: 0 0 90%;   /* EXACTLY one panel wide */
+  flex: 0 0 100%;          /* <-- keep 100% (do not change in media queries) */
   display: grid;
   grid-template-rows: 1fr auto;
   background: #f9fafb;
 }
 
+/* Image: full-bleed, controllable crop */
 .carousel__slide img{
+  display: block;          /* removes inline-gap */
   width: 100%;
   height: clamp(200px, 45vw, 400px);
   object-fit: cover;
-  object-position: 40% center;   /* <-- shift to the left side */
+  object-position: 40% center; /* tweak crop horizontally as desired */
 }
 
-
+/* Caption */
 .carousel__slide figcaption{
   padding: 10px 12px;
   font-size: 0.95rem;
@@ -471,7 +485,7 @@ footer {
   border-top: 1px solid #e5e7eb;
 }
 
-/* arrows */
+/* Arrows */
 .carousel__arrow{
   position: absolute; top: 50%; transform: translateY(-50%);
   width: 42px; height: 42px;
@@ -489,7 +503,7 @@ footer {
 .carousel__arrow.prev{ left: 10px; }
 .carousel__arrow.next{ right: 10px; }
 
-/* dots */
+/* Dots */
 .carousel__dots{
   position: absolute;
   left: 0; right: 0; bottom: 10px;
@@ -501,20 +515,17 @@ footer {
 }
 .carousel__dots button[aria-selected="true"]{ background: #2563eb; }
 
-/* keyboard focus */
+/* Keyboard focus */
 .carousel__arrow:focus-visible,
 .carousel__dots button:focus-visible{
   outline: 2px solid #2563eb; outline-offset: 2px;
 }
 
-/* small screens */
-@media (max-width: 720px){
-  .carousel__slide{
-    flex: 0 0 85%;   /* EXACTLY one panel wide */
-    display: grid;
-    grid-template-rows: 1fr auto;
-    background: #f9fafb;
-  }
+/* Swipe niceties */
+.carousel__track{ user-select: none; touch-action: pan-y; }
 
+/* Small screens: adjust arrow size only (DO NOT change slide width) */
+@media (max-width: 720px){
   .carousel__arrow{ width: 38px; height: 38px; }
 }
+
