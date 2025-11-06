@@ -508,6 +508,13 @@ footer {
 }
 
 /* small screens */
-@media (max-width: 480px){
+@media (max-width: 720px){
+  .carousel__slide{
+    flex: 0 0 85%;   /* EXACTLY one panel wide */
+    display: grid;
+    grid-template-rows: 1fr auto;
+    background: #f9fafb;
+  }
+
   .carousel__arrow{ width: 38px; height: 38px; }
 }
